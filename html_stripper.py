@@ -1,6 +1,12 @@
-from HTMLParser import HTMLParser
+try:
+ from HTMLParser import HTMLParser
+except ImportError:
+ from html.parser import HTMLParser
 import re
-import htmlentitydefs
+try:
+ import htmlentitydefs as entities
+except ImportError:
+ from html import entities
 
 __version__ = 0.1
 __doc__ = """Strip html down to text in various ways."""
@@ -16,7 +22,7 @@ def strip_html_entities(s):
  if we match #\d+, unichr(digits) will be returned.
  Else, a unicode string will be returned."""
   if match.group(1).startswith('#'): return unichr(int(match.group(1)[1:]))
-  replacement = htmlentitydefs.entitydefs.get(match.group(1), "&%s;" % match.group(1))
+  replacement = entities.entitydefs.get(match.group(1), "&%s;" % match.group(1))
   return replacement.decode('iso-8859-1')
  return unicode(entity_re.sub(matchFunc, s))
 
