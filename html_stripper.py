@@ -1,3 +1,4 @@
+import sys
 try:
  from HTMLParser import HTMLParser
 except ImportError:
@@ -27,7 +28,9 @@ def strip_html_entities(s):
  Else, a unicode string will be returned."""
   if match.group(1).startswith('#'): return unichr(int(match.group(1)[1:]))
   replacement = entities.entitydefs.get(match.group(1), "&%s;" % match.group(1))
-  return replacement.decode('iso-8859-1')
+  if sys.version_info[0] < 3:
+   return replacement.decode('iso-8859-1')
+  return replacement
  return unicode(entity_re.sub(matchFunc, s))
 
 class _DeHTMLParser(HTMLParser):
