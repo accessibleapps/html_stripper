@@ -2,6 +2,10 @@ try:
  from HTMLParser import HTMLParser
 except ImportError:
  from html.parser import HTMLParser
+try:
+ unicode
+except NameError:
+ unicode = str
 import re
 try:
  import htmlentitydefs as entities
