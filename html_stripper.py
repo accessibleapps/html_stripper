@@ -7,6 +7,7 @@ try:
  unicode
 except NameError:
  unicode = str
+ unichr = chr
 import re
 try:
  import htmlentitydefs as entities
