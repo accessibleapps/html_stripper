@@ -13,13 +13,13 @@ def strip_html_entities(s):
     entity_re = re.compile(r"&(#\d+|\w+);")
 
     def matchFunc(match):
-        """Nested function to handle a match object.
+        r"""Nested function to handle a match object.
         If we match &blah; and it's not found, &blah; will be returned.
         if we match #\d+, chr(digits) will be returned.
         Else, a string will be returned."""
         if match.group(1).startswith("#"):
             return chr(int(match.group(1)[1:]))
-        replacement = entities.entitydefs.get(match.group(1), "&%s;" % match.group(1))
+        replacement = entities.entitydefs.get(match.group(1), f"&{match.group(1)};")
         return replacement
 
     return entity_re.sub(matchFunc, s)
