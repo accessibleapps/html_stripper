@@ -29,6 +29,8 @@ packages = ["html_stripper.py"]
 dev = [
     "ruff>=0.8.0",
     "pyright>=1.1.0",
+    "pytest<8",
+    "hypothesis>=6.0.0",
 ]
 
 [tool.ruff]
@@ -41,15 +43,12 @@ ignore = []
 
 [tool.pyright]
 pythonVersion = "3.7"
-typeCheckingMode = "basic"
+typeCheckingMode = "strict"
 reportUnusedImport = "warning"
 reportUnusedVariable = "warning"
 reportDuplicateImport = "error"
 reportMissingTypeStubs = false
 reportMissingImports = "error"
-reportUnknownMemberType = false
-reportUnknownArgumentType = false
-reportUnknownVariableType = false
 exclude = [
     "**/__pycache__",
     ".git",
