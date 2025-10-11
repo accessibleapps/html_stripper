@@ -1,20 +1,6 @@
-import sys
-
-try:
-    from HTMLParser import HTMLParser
-except ImportError:
-    from html.parser import HTMLParser
-try:
-    unicode
-except NameError:
-    unicode = str
-    unichr = chr
 import re
-
-try:
-    import htmlentitydefs as entities
-except ImportError:
-    from html import entities
+from html import entities
+from html.parser import HTMLParser
 
 __version__ = 0.1
 __doc__ = """Strip html down to text in various ways."""
@@ -29,16 +15,14 @@ def strip_html_entities(s):
     def matchFunc(match):
         """Nested function to handle a match object.
         If we match &blah; and it's not found, &blah; will be returned.
-        if we match #\d+, unichr(digits) will be returned.
-        Else, a unicode string will be returned."""
+        if we match #\d+, chr(digits) will be returned.
+        Else, a string will be returned."""
         if match.group(1).startswith("#"):
-            return unichr(int(match.group(1)[1:]))
+            return chr(int(match.group(1)[1:]))
         replacement = entities.entitydefs.get(match.group(1), "&%s;" % match.group(1))
-        if sys.version_info[0] < 3:
-            return replacement.decode("iso-8859-1")
         return replacement
 
-    return unicode(entity_re.sub(matchFunc, s))
+    return entity_re.sub(matchFunc, s)
 
 
 class _DeHTMLParser(HTMLParser):
